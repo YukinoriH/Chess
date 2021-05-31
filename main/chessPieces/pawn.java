@@ -1,15 +1,11 @@
 package main.chessPieces;
 
-public class pawn extends Piece {
+public class Pawn extends Piece {
 
     boolean firstMove = true;
 
-    public pawn(){
+    public Pawn(){
         super("PAWN",'P');
-    }
-
-    public void movement(){
-        
     }
 
     public boolean validPath(int endX, int endY){

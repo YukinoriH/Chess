@@ -19,8 +19,15 @@ public abstract class Piece {
         this.xPos = x;
         this.yPos = y;
     }
-
-    public abstract void movement();
+    
+    public boolean movement(int endX, int endY){
+        if(validPath(endX, endY)){
+            this.xPos = endX;
+            this.yPos = endY;
+            return true;
+        }
+        return false;
+    }
 
     public abstract boolean validPath(int endX, int endY);
 
