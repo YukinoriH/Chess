@@ -1,10 +1,52 @@
 package main;
+import java.util.Scanner;
 import main.chessPieces.*;
 
 public class Chess{
 
     public static void main(String [] args){
-        boardDisplay(initialState());
+
+        Piece[][] chessBoard = initialState();
+        Scanner input = new Scanner(System.in);
+        int [] move;
+        
+        while(true){
+            boardDisplay(chessBoard);
+            move = playerInput(input);
+            break;
+        }
+
+        input.close();
+        
+    }
+
+    private static int[] playerInput(Scanner input){
+
+        System.out.println("Enter your move. EX: A2 to A3");
+        String move = input.nextLine();
+        int [] invalid = new int[]{-1};
+
+        if(move.length() < 0 || move.length() > 8){
+            return invalid;
+        } 
+        //ASCii 65~72 -> A~H & 97~104 -> a~h
+        char temp1 = move.charAt(0);
+        int temp = (int)temp1;
+
+        if(temp < 65 || temp > 72){
+            return invalid;
+        }
+
+        temp1 = move.charAt(1);
+        temp = (int)temp1;
+
+        if(temp < 1 || temp > 8){
+
+        }
+
+        return invalid;
+        
+
     }
 
     public static void boardDisplay(Piece[][] boardState){
@@ -27,7 +69,7 @@ public class Chess{
             System.out.printf("\n");
             count--;
         }
-        
+
         System.out.println(" * * * * * * * * * * ");  
         System.out.println("   a b c d e f g h   ");
         
