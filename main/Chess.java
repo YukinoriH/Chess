@@ -8,9 +8,11 @@ public class Chess{
 
         Piece[][] chessBoard = initialState();
         Scanner input = new Scanner(System.in);
-        int [] move;
         
-        while(true){
+        int [] move;
+        boolean gameCont = true;
+        
+        while(gameCont){
             boardDisplay(chessBoard);
             move = playerInput(input);
             break;

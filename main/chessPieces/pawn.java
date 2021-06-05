@@ -14,7 +14,7 @@ public class Pawn extends Piece {
             return false;
         }
 
-        if(endX > xPos + 2 || endY > yPos + 3){
+        if(endX > xPos + 1 || endY > yPos + 2){
             return false;
         }
 

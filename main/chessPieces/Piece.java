@@ -1,4 +1,5 @@
 package main.chessPieces;
+import java.lang.Math;
 
 public abstract class Piece {
 
