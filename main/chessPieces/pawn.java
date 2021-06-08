@@ -8,7 +8,7 @@ public class Pawn extends Piece {
         super("PAWN",'P');
     }
 
-    public boolean validPath(int endX, int endY){
+    protected boolean validPath(int endX, int endY){
 
         if(endX > 7 || endX < 0 || endY > 7 || endY < 0){
             return false;

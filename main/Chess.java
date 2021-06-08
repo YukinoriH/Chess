@@ -15,7 +15,15 @@ public class Chess{
         while(gameCont){
             boardDisplay(chessBoard);
             move = playerInput(input);
-            break;
+            if(chessBoard[move[0]][move[1]] == null){
+                System.out.println("Invalid move");
+                break;
+            } else if(chessBoard[move[0]][move[1]].movement(move[3],move[2])){
+                chessBoard[move[2]][move[3]] = chessBoard[move[0]][move[1]];
+                chessBoard[move[0]][move[1]] = null;
+            }
+            
+
         }
 
         input.close();
@@ -24,30 +32,35 @@ public class Chess{
 
     private static int[] playerInput(Scanner input){
 
-        System.out.println("Enter your move. EX: A2 to A3");
-        String move = input.nextLine();
-        int [] invalid = new int[]{-1};
+        int [] output = new int[4];
+        int index = 0;
 
-        if(move.length() < 0 || move.length() > 8){
-            return invalid;
-        } 
-        //ASCii 65~72 -> A~H & 97~104 -> a~h
-        char temp1 = move.charAt(0);
-        int temp = (int)temp1;
+        while(index < 4){
 
-        if(temp < 65 || temp > 72){
-            return invalid;
+            if(index < 2){
+                System.out.println("Choose a piece. EX:A2");
+            } else {
+                System.out.println("Choose where to move. EX:B2");
+            }
+            
+            String move = input.nextLine();
+            if(move.length() == 2){
+                int xChar = (int)move.charAt(0);
+                int yChar = (int)move.charAt(1);
+                //ASCii: 65~72 -> A~H & 49~55 -> 1~7
+                if(xChar < 65 || xChar > 72 || yChar < 49 || yChar > 55){
+                    System.out.println("Invalid Input");
+                } else {
+                    output[index++] = xChar - 64;
+                    output[index++] = yChar - 48;
+                }
+            } else {
+                System.out.println("Invalid Input");
+            }
+                      
         }
 
-        temp1 = move.charAt(1);
-        temp = (int)temp1;
-
-        if(temp < 1 || temp > 8){
-
-        }
-
-        return invalid;
-        
+        return output;
 
     }
 
@@ -79,13 +92,11 @@ public class Chess{
 
     private static Piece[][] initialState(){
         Piece [][] newBoard = new Piece[8][8];
-        Piece [] backRow = {new Rook(), new Knight(), new Bishop(), new King(), new Queen(), new Bishop(), new Knight(), new Rook()};
-        Piece [] pawnRow = {new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn()};
 
-        newBoard[0] = backRow;
-        newBoard[1] = pawnRow;
-        newBoard[6] = pawnRow;
-        newBoard[7] = backRow;
+        newBoard[0] = new Piece[]{new Rook(), new Knight(), new Bishop(), new King(), new Queen(), new Bishop(), new Knight(), new Rook()};
+        newBoard[1] = new Piece[]{new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn()};
+        newBoard[6] = new Piece[]{new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn(), new Pawn()};
+        newBoard[7] = new Piece[]{new Rook(), new Knight(), new Bishop(), new King(), new Queen(), new Bishop(), new Knight(), new Rook()};
 
         for(int y = 0; y < 8; y++){
             for(int x = 0; x < 8; x++){

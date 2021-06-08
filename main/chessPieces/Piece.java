@@ -1,5 +1,4 @@
 package main.chessPieces;
-import java.lang.Math;
 
 public abstract class Piece {
 
@@ -23,13 +22,12 @@ public abstract class Piece {
     
     public boolean movement(int endX, int endY){
         if(validPath(endX, endY)){
-            this.xPos = endX;
-            this.yPos = endY;
+            updatePos(endX,endY);
             return true;
         }
         return false;
     }
 
-    public abstract boolean validPath(int endX, int endY);
+    protected abstract boolean validPath(int endX, int endY);
 
 }
