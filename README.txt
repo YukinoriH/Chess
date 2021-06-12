@@ -1,4 +1,0 @@
-#COMMAND LINE CHESS
-
-
-
