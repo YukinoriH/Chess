@@ -10,6 +10,7 @@ public class Chess{
         
         int [] move;
         boolean gameCont = true;
+        int playerTurn = 1;
         
         while(gameCont){
             chessBoard.boardDisplay();
@@ -17,9 +18,14 @@ public class Chess{
             if(chessBoard.getPiece(move[0],move[1])== null){
                 System.out.println("Invalid move");
             } else if(chessBoard.getPiece(move[0],move[1]).movement(move[3],move[2])){
-                chessBoard.updatePiece(move[0],move[1],move[2],move[3]);
-            }
-            
+                chessBoard.updatePiece(move[1],move[0],move[3],move[2]);
+
+                if(playerTurn == 2){
+                    playerTurn--;
+                } else {
+                    playerTurn++;
+                }
+            }           
 
         }
 
@@ -42,14 +48,15 @@ public class Chess{
             
             String move = input.nextLine();
             if(move.length() == 2){               
-                int yChar = (int)move.charAt(0);
-                int xChar = (int)move.charAt(1);
-                //ASCii: 65~72 -> A~H & 49~55 -> 1~7
-                if(xChar < 49 || xChar > 55 || yChar < 65 || yChar > 72){
+                int xChar = (int)move.charAt(0);
+                int yChar = (int)move.charAt(1);
+                //The Board is reversed on the x-axis. ex: A1 would be at int[0][7]
+                //ASCii: 65~72 -> A~H & 49~57 -> 1~8
+                if(yChar < 49 || yChar > 57 ||  xChar < 65 ||  xChar > 72){
                     System.out.println("Invalid Input");
                 } else {
-                    output[index++] = xChar - 49;   
-                    output[index++] = yChar - 65;                                   
+                    output[index++] = Math.abs(yChar - 49 - 7);   
+                    output[index++] = xChar - 65;                                   
                 }
             } else {
                 System.out.println("Invalid Input");
