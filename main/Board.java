@@ -1,10 +1,40 @@
-package main;
+/*
+The class used to create the chess board and keep track of the board state
+The main functions are:
+    1) Create new chess board
+    2) Displays the current board state
+    3) Checks if the the player's input is a valid movement option
 
+The board is displayed as the follwing in the terminal:
+      A B C D E F G H   
+    * * * * * * * * * * 
+  8 * - - - - - - - - * 8
+  7 * - - - - - - - - * 7
+  6 * - - - - - - - - * 6
+  5 * - - - - - - - - * 5
+  4 * - - - - - - - - * 4
+  3 * - - - - - - - - * 3
+  2 * - - - - - - - - * 2
+  1 * - - - - - - - - * 1
+    * * * * * * * * * * 
+      A B C D E F G H
+Each '-' is a null space and a possible location for a chess piece
+Chess pieces are displayed as single characters matching the first letter of their names.
+The character for the King piece is W, as 'K' is for the knight piece.
+
+TODO: 
+    1) Have error checks and returns proper value for invalid inputs
+    2) Finish checkPath
+    3) Create response to capture pieces
+*/
+
+package main;
 import main.chessPieces.*;
 
 public class Board {
 
     Piece [][] chessBoard = new Piece[8][8];
+
 
     public Board(){
 
@@ -65,17 +95,24 @@ public class Board {
         this.chessBoard[oldY][oldX] = null;
     }
 
-    //type 1 = horizontal, 2 = vertical, 3 = diagnal
+    //Method used to check for other chess pieces between the start point and end point
+    //3 types of movement: type 1 = horizontal, 2 = vertical, 3 = diagnal
+    //Each movement type has different loops in the same direction, but contains different start and end points
     public Piece checkPath(int fromX, int fromY, int toX, int toY, int type){
+
+        //If there is a chess piece located at the end point, 
+        //then it should be the only piece in the path for the movement to be considered valid
+        //If there is no piece, then foundPiece is null.
+        Piece foundPiece = this.chessBoard[toX][toY];
 
         switch(type){
             case(1):
                 if(fromY > toY){
                     //left
-                    loopBoardList(fromX, toY, toX, fromY);
+                    loopBoardList(fromX, toY, toX, fromY, foundPiece);
                 } else if (fromY < toY){
                     //right
-                    loopBoardList(fromX, fromY, toX, toY);
+                    loopBoardList(fromX, fromY, toX, toY, foundPiece);
                 } else {
                     //invalid
                 }
@@ -84,10 +121,10 @@ public class Board {
             case(2):
                 if(fromX > toX){
                     //down
-                    loopBoardList(fromX, fromY, toX, toY);
+                    loopBoardList(fromX, fromY, toX, toY, foundPiece);
                 } else if (fromX < toX){
                     //up
-                    loopBoardList(toX, fromY, fromX, toY);
+                    loopBoardList(toX, fromY, fromX, toY, foundPiece);
                 } else {
                     //invalid
                 }
@@ -112,8 +149,7 @@ public class Board {
         return null;
     } 
 
-    private Piece loopBoardList(int startX, int startY, int endX, int endY){
-        Piece foundPiece = null;
+    private Piece loopBoardList(int startX, int startY, int endX, int endY, Piece foundPiece){
 
         for(int y = startY; y <= endY; y++){
             for(int x = startX; x <= endX; x++){

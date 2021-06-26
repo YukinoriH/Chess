@@ -1,5 +1,13 @@
-package main.unitTests;
+/*
+Tests all posible movement options for each chess piece.
+When called, each function displays where the piece was positioned and where it was supposed to go to
 
+TODO: 
+    1) add test for every piece
+
+*/
+
+package main.unitTests;
 import main.chessPieces.*;
 
 public class piecesTests {
